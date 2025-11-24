@@ -1,0 +1,13 @@
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: deploy to staging
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Check out the repository to the runner
+      uses: actions/checkout@v5
+    - name: building
+      run: |
+        ./build.sh
