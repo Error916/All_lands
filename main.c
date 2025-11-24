@@ -46,7 +46,7 @@ int main(int argc, char** argv) {
     int coll = 9;
     int rows = (land_tot / coll);
     rows += land_tot % coll ? 1 : 0; 
-
+    printf("<!DOCTYPE html>\n");
     printf("<html>\n");
     printf("    <head>\n");
     printf("        <link rel=\"stylesheet\" href=\"web.css\">\n");
