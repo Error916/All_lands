@@ -1,13 +1,15 @@
 on:
-  workflow_dispatch:
+  schedule:
+  - cron: "0 0 * * *"
 
 jobs:
   build:
     name: deploy to staging
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
     - name: Check out the repository to the runner
       uses: actions/checkout@v5
     - name: building
-      run: |
-        ./build.sh
+      run: ./build.sh
+    - name: Update site
+      uses: actions/pages-build-deployment@v1
