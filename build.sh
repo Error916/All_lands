@@ -15,15 +15,15 @@ PAGS=24;
 
 for i in $(seq 1 $PAGS);
     do 
-        curl "https://api.scryfall.com/cards/search?dir=asc&format=json&include_extras=true&include_multilingual=false&include_variations=true&order=released&page=$i&q=t%3Aland+t%3Abasic+include%3Aextras+-layout%3Aart_series+game%3Apaper+in%3Apaper+unique%3Aprints+include%3Aextras+include%3Avariations&unique=prints" | jq > pag$i.json; 
-        rg '"released_at":'      -r '' pag$i.json >> released.txt;
-        rg '"scryfall_uri":'     -r '' pag$i.json >> scryfall_uri.txt;
-        rg '"normal":'           -r '' pag$i.json >> images.txt;
-        rg '"foil":'             -r '' pag$i.json >> foil.txt; 
-        rg '"nonfoil":'          -r '' pag$i.json >> nonfoil.txt;
-        rg '"set":'              -r '' pag$i.json >> set_sig.txt;
-        rg '"set_name":'         -r '' pag$i.json >> set_name.txt;
-        rg '"collector_number":' -r '' pag$i.json >> collector_number.txt;
+        curl "https://api.scryfall.com/cards/search?dir=asc&format=json&include_extras=true&include_multilingual=false&include_variations=true&order=released&page=$i&q=t%3Aland+t%3Abasic+include%3Aextras+-layout%3Aart_series+game%3Apaper+in%3Apaper+unique%3Aprints+include%3Aextras+include%3Avariations&unique=prints" | jq > pag"$i".json; 
+        grep -Po '"released_at": \K.*'      pag"$i".json >> released.txt;
+        grep -Po '"scryfall_uri": \K.*'     pag"$i".json >> scryfall_uri.txt;
+        grep -Po '"normal": \K.*'           pag"$i".json >> images.txt;
+        grep -Po '"foil": \K.*'             pag"$i".json >> foil.txt; 
+        grep -Po '"nonfoil": \K.*'          pag"$i".json >> nonfoil.txt;
+        grep -Po '"set": \K.*'              pag"$i".json >> set_sig.txt;
+        grep -Po '"set_name": \K.*'         pag"$i".json >> set_name.txt;
+        grep -Po '"collector_number": \K.*' pag"$i".json >> collector_number.txt;
 done
 
 awk -i inplace '{$1=$1; print}' released.txt;
@@ -80,5 +80,5 @@ rm collector_number.txt;
 rm elements.txt;
 
 for i in $(seq 1 $PAGS);
-    do rm pag$i.json;
+    do rm pag"$i".json;
 done
