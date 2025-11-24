@@ -4,6 +4,11 @@
 #include "all_lands.h"
 
 int main(int argc, char** argv) {
+    int coll = 9;
+    if (argc > 1) {
+        coll = atoi(argv[1]);
+    }
+
     int land_tot = 0;
     for (int i = 0; i < land_count; ++i) {
         land_tot += cards[i].foil;
@@ -43,7 +48,6 @@ int main(int argc, char** argv) {
         }
     }
 
-    int coll = 9;
     int rows = (land_tot / coll);
     rows += land_tot % coll ? 1 : 0; 
     printf("<!DOCTYPE html>\n");

@@ -67,7 +67,7 @@ const size_t land_count = sizeof(cards) / sizeof(cards[0]);
 
 gcc main.c -o sitemaker;
 
-./sitemaker > index.html;
+./sitemaker 7 > index.html;
 
 rm released.txt;
 rm scryfall_uri.txt;
