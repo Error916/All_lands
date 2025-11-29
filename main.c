@@ -62,7 +62,7 @@ int main(int argc, char** argv) {
     for (int i = 0; i < rows; ++i) {
         printf("            <tr>\n");
         for(int j = i * coll; j < i * coll + coll && j < land_tot; ++j)
-            printf("                <td>%04d<br /><a href=\"%s\"><img src=\"%s\"></a>(%s %s #%s)<br />\"%s\"<br />(%s)<br /></td>\n", j, cards_full[j].scryfall_uri, cards_full[j].image[0], cards_full[j].set_sig, cards_full[j].foil ? "*" : " ", cards_full[j].collector_number, cards_full[j].set_name, cards_full[j].released);
+            printf("                <td>%04d<br /><a href=\"%s\"><img loading=\"lazy\" fetchpriority=\"high\" src=\"%s\"></a>(%s %s #%s)<br />\"%s\"<br />(%s)<br /></td>\n", j, cards_full[j].scryfall_uri, cards_full[j].image[0], cards_full[j].set_sig, cards_full[j].foil ? "*" : " ", cards_full[j].collector_number, cards_full[j].set_name, cards_full[j].released);
         printf("            </tr>\n");
     } 
     printf("        </table>\n");
