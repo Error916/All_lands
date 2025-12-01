@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "all_lands.h"
 
@@ -49,7 +50,14 @@ int main(int argc, char** argv) {
     }
 
     int rows = (land_tot / coll);
-    rows += land_tot % coll ? 1 : 0; 
+    rows += land_tot % coll ? 1 : 0;
+
+    time_t now = time(NULL);
+    struct tm *t = localtime(&now);
+    char timebuf[100];
+
+    strftime(timebuf, sizeof(timebuf), "%d %b %Y %H:%M:%S", t);
+
     printf("<!DOCTYPE html>\n");
     printf("<html>\n");
     printf("    <head>\n");
@@ -58,7 +66,7 @@ int main(int argc, char** argv) {
     printf("    </head>\n");
     printf("    <body>\n");
     printf("        <table>\n");
-    printf("            <th colspan=%d>tot: %d, unique: %d, rows: %d, coll: %d</th>\n", coll, land_tot, land_count, rows, coll);
+    printf("            <th colspan=%d>tot: %d, unique: %ld, rows: %d, coll: %d, lastupdate: %s</th>\n", coll, land_tot, land_count, rows, coll, timebuf);
     for (int i = 0; i < rows; ++i) {
         printf("            <tr>\n");
         for(int j = i * coll; j < i * coll + coll && j < land_tot; ++j)
