@@ -39,36 +39,52 @@ awk -i inplace '{$1=$1; print}' set_name.txt;
 awk -i inplace '{$1=$1; print}' collector_number.txt;
 
 paste -d ' ' released.txt scryfall_uri.txt images.txt foil.txt nonfoil.txt set_sig.txt set_name.txt collector_number.txt > elements.txt;
-awk -i inplace '{print "    {" $0 "},"}' elements.txt;
+awk -i inplace '{print "    {UNINDEXED, " $0 "},"}' elements.txt;
 
-printf '#include <stddef.h>
-#include <stdbool.h>
-
-typedef struct {
-    const char* released;
-    const char* scryfall_uri;
-    const char* image[2];
-    bool  foil;
-    bool  nonfoil;
-    const char* set_sig;
-    const char* set_name;
-    const char* collector_number;
-} Card;
+printf '#include "card_type.h"
 
 const Card cards[] = {
-' > all_lands.h;
+' > all_lands_bash.h;
 
-cat elements.txt >> all_lands.h;
+cat elements.txt >> all_lands_bash.h;
 
 printf '};
 
 const size_t land_count = sizeof(cards) / sizeof(cards[0]);
-' >> all_lands.h;
+' >> all_lands_bash.h;
 
-gcc main.c -o sitemaker;
+if [ -f ./all_lands.h ]; then
+    cp all_lands.h all_lands.h.bak
+    awk -i inplace '{ gsub(/cards\[/, "cards_old["); print }' all_lands.h
+    awk -i inplace '{ gsub(/cards)/, "cards_old)"); print }' all_lands.h
+    awk -i inplace '{ gsub(/land_count/, "land_count_old"); print }' all_lands.h
+    mv all_lands.h all_lands_old.h
+fi
+
+if [ ! -f ./all_lands_old.h ]; then
+    printf '#include "card_type.h"
+
+const Card cards_old[] = {};
+    
+const size_t land_count_old = sizeof(cards_old) / sizeof(cards_old[0]);
+' > all_lands_old.h;
+fi
+
+gcc normalize.c -o normalize;
+
+./normalize
+
+gcc collection_update.c -o collection_update;
+
+./collection_update > changelog;
+
+gcc sitemaker.c -o sitemaker;
 
 ./sitemaker 7 > index.html;
 
+rm all_lands_bash.h;
+rm all_lands_normalize.h;
+rm all_lands_old.h;
 rm released.txt;
 rm scryfall_uri.txt;
 rm images.txt;

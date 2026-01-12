@@ -18,6 +18,66 @@ img {
     object-fit: contain;
 }
 
+.not_owned {
+    border: 2px solid #000000; 
+    background-color: #ffffff;
+}
+
+.owned {
+    border: 2px solid #000000; 
+    background-color: #0bb713;
+}
+
+.ordered {
+    border: 2px solid #000000; 
+    background-color: #0ba6b7;
+}
+
+.poor_quality {
+    border: 2px solid #000000; 
+    background-color: #b70b0d;
+}
+
+.wrong_language {
+    border: 2px solid #000000; 
+    background-color: #640bb7;
+}
+
+.unindexed {
+    border: 2px solid #000000; 
+    background-color: #000000;
+}
+
 @media print {
     table { font-size: 8pt; }
+
+    .not_owned {
+        border: 2px solid #000000; 
+        background-color: #ffffff;
+    }
+
+    .owned {
+        border: 2px solid #000000; 
+        background-color: #ffffff;
+    }
+
+    .ordered {
+        border: 2px solid #000000; 
+        background-color: #ffffff;
+    }
+
+    .poor_quality {
+        border: 2px solid #000000; 
+        background-color: #ffffff;
+    }
+
+    .wrong_language {
+        border: 2px solid #000000; 
+        background-color: #ffffff;
+    }
+    
+    .unindexed {
+        border: 2px solid #000000; 
+        background-color: #ffffff;
+    }
 }
