@@ -9,6 +9,7 @@ typedef enum {
     ORDERED,
     POOR_QUALITY,
     WRONG_LANGUAGE,
+    CARD_STATE_COUNT,
 } collection_status_t;
 
 typedef struct {

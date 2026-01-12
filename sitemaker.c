@@ -19,21 +19,10 @@ int main(int argc, char** argv) {
     char timebuf[100];
 
     strftime(timebuf, sizeof(timebuf), "%d %b %Y %H:%M:%S", t);
-    
-    int owned = 0;
-    int missing = 0;
+   
+    int count[CARD_STATE_COUNT] = { 0 };
     for (int i = 0; i < land_count; ++i) {
-            switch (cards[i].status) {
-                case OWNED:
-                case ORDERED:
-                case POOR_QUALITY:
-                case WRONG_LANGUAGE:
-                    owned++;
-                case NOT_OWNED:
-                case UNINDEXED:
-                default:
-                    missing++;
-            }
+        count[cards[i].status]++;
     }
 
     printf("<!DOCTYPE html>\n");
@@ -44,7 +33,34 @@ int main(int argc, char** argv) {
     printf("    </head>\n");
     printf("    <body>\n");
     printf("        <table>\n");
-    printf("            <th colspan=%d>tot: %d, owned: %d, missing: %d, rows: %d, coll: %d, lastupdate: %s</th>\n", coll, land_count, owned, missing, rows, coll, timebuf);
+    printf("            <th colspan=2> BG color reference table </th>\n");
+    printf("            <tr>\n");
+    printf("                <td>Not owned</td>\n");
+    printf("                <td class = \"not_owned\">%05d</td>\n", count[NOT_OWNED]);
+    printf("            </tr>\n");
+    printf("            <tr>\n");
+    printf("                <td>Owned</td>\n");
+    printf("                <td class = \"owned\">%05d</td>\n", count[OWNED]);
+    printf("            </tr>\n");
+    printf("            <tr>\n");
+    printf("                <td>Ordered</td>\n");
+    printf("                <td class = \"ordered\">%05d</td>\n", count[ORDERED]);
+    printf("            </tr>\n");
+    printf("            <tr>\n");
+    printf("                <td>Poor quality</td>\n");
+    printf("                <td class = \"poor_quality\">%05d</td>\n", count[POOR_QUALITY]);
+    printf("            </tr>\n");
+    printf("            <tr>\n");
+    printf("                <td>Wrong language</td>\n");
+    printf("                <td class = \"wrong_language\">%05d</td>\n", count[WRONG_LANGUAGE]);
+    printf("            </tr>\n");
+    printf("            <tr>\n");
+    printf("                <td>Unindexed</td>\n");
+    printf("                <td class = \"unindexed\">%05d</td>\n", count[UNINDEXED]);
+    printf("            </tr>\n");
+    printf("        </table>\n");
+    printf("        <table>\n");
+    printf("            <th colspan=%d>tot: %ld, owned: %d, missing: %d, rows: %d, coll: %d, lastupdate: %s</th>\n", coll, land_count, count[OWNED] + count[ORDERED] + count[POOR_QUALITY] + count[WRONG_LANGUAGE], count[NOT_OWNED] + count[UNINDEXED], rows, coll, timebuf);
     for (int i = 0; i < rows; ++i) {
         printf("            <tr>\n");
         for(int j = i * coll; j < i * coll + coll && j < land_count; ++j) {
