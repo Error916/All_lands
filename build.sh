@@ -86,6 +86,7 @@ cp all_lands.h all_lands_latest.h
 awk -i inplace '{ gsub(/cards\[/, "cards_latest["); print }' all_lands_latest.h
 awk -i inplace '{ gsub(/cards)/, "cards_latest)"); print }' all_lands_latest.h
 awk -i inplace '{ gsub(/land_count/, "land_count_latest"); print }' all_lands_latest.h
+gcc manualchangelog.c -o manualchangelog;
 
 rm all_lands_bash.h;
 rm all_lands_normalize.h;
