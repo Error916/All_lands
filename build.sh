@@ -82,6 +82,11 @@ gcc sitemaker.c -o sitemaker;
 
 ./sitemaker 7 > index.html;
 
+cp all_lands.h all_lands_latest.h
+awk -i inplace '{ gsub(/cards\[/, "cards_latest["); print }' all_lands_latest.h
+awk -i inplace '{ gsub(/cards)/, "cards_latest)"); print }' all_lands_latest.h
+awk -i inplace '{ gsub(/land_count/, "land_count_latest"); print }' all_lands_latest.h
+
 rm all_lands_bash.h;
 rm all_lands_normalize.h;
 rm all_lands_old.h;
