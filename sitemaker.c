@@ -6,7 +6,7 @@
 #include "all_lands.h"
 
 int main(int argc, char** argv) {
-    int coll = 9;
+    int coll = 7;
     if (argc > 1) {
         coll = atoi(argv[1]);
     }
