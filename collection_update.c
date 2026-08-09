@@ -11,8 +11,8 @@ int card_eq(const Card *c1, const Card *c2) {
            c1->nonfoil == c2->nonfoil &&
            strcmp(c1->set_sig, c2->set_sig) == 0 &&
            strcmp(c1->collector_number, c2->collector_number) == 0 &&
-           strcmp(c1->released, c2->released) == 0 &&
-           strcmp(c1->image[0], c2->image[0]) == 0)
+           strcmp(c1->released, c2->released) == 0 /*&&
+           strcmp(c1->image[0], c2->image[0]) == 0*/)
            return 1;
        return 0;
 }

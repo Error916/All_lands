@@ -2,7 +2,7 @@
 
 set -xe;
 
-PAGS=24;
+PAGS=25;
 
 :> released.txt;
 :> scryfall_uri.txt;
